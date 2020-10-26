@@ -1,0 +1,131 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+
+  background-image: linear-gradient(
+      to bottom,
+      rgba(125, 125, 238, 0.5),
+      rgba(255, 255, 0, 0.5)
+    ),
+    url(./images/mapUkraine.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  color: #9aa0a6;
+}
+
+.title {
+  display: block;
+  margin: 50px;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 100px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.title > span:nth-child(1) {
+  color: #4285f4;
+}
+.title > span:nth-child(2) {
+  color: #ea4335;
+}
+.title > span:nth-child(3) {
+  color: #fbbc05;
+}
+.title > span:nth-child(4) {
+  color: #4285f4;
+}
+.title > span:nth-child(5) {
+  color: #34a853;
+}
+.title > span:last-child {
+  color: #ea4335;
+}
+
+.search {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 50px;
+  color: inherit;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  fill: currentColor;
+}
+
+.search-input {
+  width: 500px;
+  height: 50px;
+  padding: 10px;
+  padding-left: 50px;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+
+  border: 2px solid #9aa0a6;
+  border-radius: 25px;
+  background-color: #ffffff;
+  color: inherit;
+  cursor: text;
+  outline: none;
+}
+
+.search-input:hover,
+.search-input:focus {
+  box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+}
+
+.simple-list {
+  display: inline-block;
+  text-align: left;
+  font-size: 30px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.countryName {
+  display: block;
+  margin-bottom: 50px;
+  font-size: 50px;
+  color: #000000;
+}
+
+.countryInfo {
+  display: flex;
+  justify-content: center;
+
+  color: #000000;
+}
+
+.countryListItems {
+  min-width: 400px;
+  max-width: 500px;
+  margin-right: 20px;
+
+  font-size: 25px;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+
+.countryItem > span {
+  font-weight: 700;
+}
+
+.countryFlag {
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.4);
+}
