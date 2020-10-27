@@ -1,4 +1,4 @@
-import country from "../templates/country.hbs";
+import countryForm from "../templates/country.hbs";
 import fetchCountries from "./fetchCountries.js";
 import _ from "lodash";
 import { info, error } from '@pnotify/core';
@@ -9,14 +9,17 @@ import "@pnotify/core/dist/BrightTheme.css";
 const refs = {
 	input: document.querySelector(".js-request"),
 	output: document.querySelector(".js-response"),
+	clearBtn: document.querySelector(".js-clear"),
 }
 let listOfLinks = null;
 
 refs.input.addEventListener("input", _.debounce(makeRequest, 500));
+refs.clearBtn.addEventListener("click", clearAll);
 
 function makeRequest() {
 	refs.output.innerHTML = "";
-	if (refs.input.value !== "") {
+	if (listOfLinks) { clearListener() };
+	if (refs.input.value) {
 		fetchCountries(refs.input.value).then(data => {
 			if (!data) {
 				info({ text: "Нічого не знайшли за вашим запитом. Спробуйте ще." });
@@ -27,21 +30,34 @@ function makeRequest() {
 
 function parseData(data) {
 	if (data.length > 10) {
-		const myError = error({
-			text: "Занадто багато варіантів країн. Спробуйте конкретизувати."
-		});
+		error({ text: "Занадто багато варіантів країн. Спробуйте конкретизувати." });
 	} else if (data.length > 1) {
 		refs.output.insertAdjacentHTML("afterbegin", `<ul class="simple-list">${data.reduce((acc, { name }) => acc + `<li><a href="#">${name}</a></li>`, "")}</ul>`);
 		listOfLinks = document.querySelector(".simple-list");
-		listOfLinks.addEventListener("click", createRequest);
+		listOfLinks.addEventListener("click", showSelectedCountry);
 	} else {
-		const page = country(data[0]);
-		refs.output.insertAdjacentHTML("afterbegin", page);
+		refs.output.insertAdjacentHTML("afterbegin", countryForm(data[0]));
 	}
 }
 
-function createRequest(event) {
-	refs.input.value = event.target.innerText;
-	makeRequest();
-	listOfLinks.removeEventListener("click", createRequest);
+function showSelectedCountry(event) {
+	const countryName = event.target.innerText;
+	refs.input.value = countryName;
+	refs.output.innerHTML = "";
+	fetchCountries(countryName).then(data => {
+		const singleCountry = data.filter(({ name }) => name.toLowerCase() === countryName.toLowerCase())[0];
+		refs.output.insertAdjacentHTML("afterbegin", countryForm(singleCountry));
+	})
+	clearListener();
+}
+
+function clearListener() {
+	listOfLinks.removeEventListener("click", showSelectedCountry);
+	listOfLinks = null;
+}
+
+function clearAll() {
+	refs.input.value = "";
+	refs.output.innerHTML = "";
+	if (listOfLinks) { clearListener() };
 }

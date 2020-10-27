@@ -4,6 +4,7 @@
   "description": "repository for hw12",
   "main": "postcss.config.js",
   "scripts": {
+    "start": "webpack --mode=development",
     "dev": "webpack --mode=development",
     "postdev": "npm run server",
     "server": "webpack-dev-server --mode=development",
